@@ -1,10 +1,15 @@
 import requests
 import json
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 
 
-OTX_API_KEY = '367b9fbfe7b22f1dc6d4051b11fce7933c23e8c1ee14bfeb156967a848851081'
+api_key = os.getenv("OTX_API_KEY")
+
+OTX_API_KEY = api_key
 OTX_URL = 'https://otx.alienvault.com/api/v1/indicators/export?type=IPv4&Limit=50'
 IOC_FILE_PATH = '/var/ossec/etc/lists/malicious_ips.txt'
 RULES_FILE_PATH = '/var/ossec/etc/rules/local_rules.xml'
@@ -20,7 +25,7 @@ def fetch_otx_data():
         print('test')
         return response.text.split('\n')
     else:
-        print("failed to fetch data:", reponse.status_code)
+        print("failed to fetch data:", response.status_code)
         return []
 
 
